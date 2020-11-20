@@ -2,7 +2,7 @@
 
 ## Background
 
-to be filled
+Most people watch movies nowadays. However, it is very difficult for most people to watch all the movies that have been released. Sometimes, it is not easy to choose which movie to watch. There are too many characteristics for a certain movie. But if we can provide some useful statistic results based on distinct features of the movies, the users can have more ideas when choosing the movie to watch. Based on this, we can further recommend some movies to users that they will be more likely interested in and simultaneously provide the links of all the recommended movies to the user. The proposed Movie-Robot will be beneficial to both the users who enjoy watching movies and the production companies as well.
 
 ## Requirement
 
