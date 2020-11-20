@@ -23,4 +23,9 @@ Most people watch movies nowadays. However, it is very difficult for most people
 
 ## Data Sources
 
-to be filled
+The Movie-Robot uses two datasets, which can be found in README.md
+1.	tmdb_5000_credits.csv
+This dataset contains information about movie ID, title, cast, and crew. Both the cast and crew fields are json format data including the general information about the actors, actresses, and the crew.
+2.	tmdb_5000_movies.csv
+This dataset has the information including budget, genres, homepage, movie ID, keywords, original language, overview, popularity, production companies, production countries, release date, revenue, runtime, spoken language, status, tagline, title, vote average, and vote count.
+
