@@ -27,7 +27,7 @@ Given some specifications, like language, genre, release date, the movie-rebot w
 
 Given some specifications, based on which the movie-robot will return the top-k recommended movies. The metrics can be ratings or popularity, and `k` is an integer number specified by the query user. For example, the user can query the top-10 Action movies released in year 2010 based on their recieved average ratings.
 
-### Use Case 4: 
+### Use Case 4 
 
 Given a known movie, the movie-robot will return the top-10 movies that are similar to this movie.
 

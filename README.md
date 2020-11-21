@@ -42,8 +42,8 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 - numpy
 - matplotlib
 - seaborn
-- altair
-- vaga
+- plotly
+- dash
 - scikit-learn
 
 
