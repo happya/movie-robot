@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 .DS_Store
-*.csv
+original_data/**
 __pycache__/
 .vscode/
 .idea/
