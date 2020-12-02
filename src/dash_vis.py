@@ -8,12 +8,11 @@ import plotly as py
 import plotly.graph_objects as go
 import pandas as pd
 
-
 # init dash app
 from src.data_vis import visualize_num_movies_years, visualize_genres, visualize_num_movies_companies
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets )
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 
 def prepare_data(filename):
@@ -23,9 +22,11 @@ def prepare_data(filename):
 
 def prepare_go_figs(filename):
     df = prepare_data(filename)
-    go_figs = {'num-movie-years': visualize_num_movies_years(df)}
-    go_figs['visualize_genres'] = visualize_genres(df)
-    go_figs['visualize_num_movies_companies'] = visualize_num_movies_companies(df)
+    go_figs = {
+        'num-movie-years': visualize_num_movies_years(df),
+        'visualize_genres': visualize_genres(df),
+        'visualize_num_movies_companies': visualize_num_movies_companies(df)
+    }
 
     return go_figs
 
@@ -38,10 +39,12 @@ def get_dcc_figs(go_figs):
     return dcc_figs
 
 
+def _head():
+    return html.H1(children='Movie Robot', style={"text-align": "center"})
+
+
 def run(dcc_figs):
-    app.layout = html.Div(children=[
-        html.H1(children='Movie Robot', style={"text-align": "center"})
-    ] + dcc_figs)
+    app.layout = html.Div(children=[_head()] + dcc_figs)
 
 
 def main():
@@ -53,6 +56,3 @@ def main():
 if __name__ == '__main__':
     main()
     app.run_server(port=8088, debug=True)
-
-
-
