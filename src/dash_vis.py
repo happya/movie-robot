@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+import os
 
 import dash
 import dash_core_components as dcc
@@ -12,6 +13,7 @@ import pandas as pd
 from dash.dependencies import Input, Output
 
 from src.data_vis import *
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -24,7 +26,8 @@ def prepare_data(filename):
         return pd.read_csv(filename)
 
 
-df = prepare_data('../data/movies_cleaned.csv')
+data_path = os.path.abspath(os.path.join(__file__, '../../data/movies_cleaned.csv'))
+df = prepare_data(data_path)
 
 
 def prepare_go_figs():
@@ -62,7 +65,7 @@ def get_graphs_from_all_data(go_figs):
                 html.Div([
                     html.P('Please select a year: (default by all)'),
                     _get_drop_down('lang-year-option', 'year')
-                    ], style={'display': 'inline-block', 'width': '49%'}),
+                ], style={'display': 'inline-block', 'width': '49%'}),
                 dcc.Graph(id='lang-year-pie')
             ],
             style={'display': 'inline-block', 'width': '100%'}
@@ -80,19 +83,13 @@ def _update_graph_pie(selected, func, title):
     fig.update_traces(textposition='inside', textinfo='percent+label')
     return fig
 
+
 @app.callback(
     Output('lang-year-pie', 'figure'),
     Input('lang-year-option', 'value'))
 def update_lang_year_graph(selected_year):
     title = 'Language of Movies in year ' + selected_year
     return _update_graph_pie(selected_year, data_language, title)
-    data = data_language(df, selected_year)
-    layout = go.Layout(
-        title='Language of Movies in year ' + selected_year
-    )
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_traces(textposition='inside', textinfo='percent+label')
-    return fig
 
 
 @app.callback(
@@ -109,6 +106,7 @@ def update_genre_year_graph(selected_year):
     fig = go.Figure(data=data, layout=layout)
     fig.update_traces(textposition='inside', textinfo='percent+label')
     return fig
+
 
 def _head():
     return html.H1(children='Movie Robot', style={"text-align": "center"})
