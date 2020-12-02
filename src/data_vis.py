@@ -1,23 +1,11 @@
 from collections import defaultdict
 
-import pandas as pd
-import plotly as py
+import plotly.express as px
 import plotly.graph_objects as go
 
 
-def get_year(release_date):
-    if not isinstance(release_date, str):
-        return None
-    year_month_day = release_date.split('-')
-    if len(year_month_day) != 3:
-        return None
-    year = int(year_month_day[0])
-    return year
-
-
 def visualize_num_movies_years(df):
-    year = df['release_date'].apply(get_year)
-    year_count = year.value_counts().sort_index()
+    year_count = df['year'].value_counts().sort_index()
 
     data = [go.Bar(name='movies/year', x=year_count.index, y=year_count.values)]
     layout = go.Layout(title='Numbers of movies per year')
@@ -25,20 +13,15 @@ def visualize_num_movies_years(df):
     return fig
 
 
-def visualize_genres(df):
+def get_genres_distribution(genre_col):
     genre_count = dict()
-    for genre_list in df['genre_names']:
+    for genre_list in genre_col:
         for g in genre_list.strip('[]').split(','):
             g = g.strip()[1:-1]
             genre_count[g] = genre_count.get(g, 0) + 1
     genres, counts = list(zip(*genre_count.items()))
     data = [go.Pie(labels=genres, values=counts)]
-    layout = go.Layout(
-        title='Movies proportion base on genres'
-    )
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_traces(textposition ='inside',textinfo='percent+label')
-    return fig
+    return data
 
 
 def visualize_num_movies_companies(df):
@@ -55,5 +38,26 @@ def visualize_num_movies_companies(df):
             }})]
     layout = go.Layout(title='Numbers of movies made by different companies')
     fig = go.Figure(data=data, layout=layout)
-
+    fig.update_xaxes(tickangle=45)
     return fig
+
+
+def data_genre(df, year):
+    if year == 'all':
+        genre_col = df['genre_names']
+    else:
+        genre_col = df['genre_names'][df['year'] == int(year)]
+    return get_genres_distribution(genre_col)
+
+
+def data_language(df, year):
+    if year == 'all':
+        language = df['lang'].value_counts()
+        lang_abbr = df['lang_short'].value_counts()
+    else:
+        language = df['lang'][df['year'] == int(year)].value_counts()
+        lang_abbr = df['lang_short'][df['year'] == int(year)].value_counts()
+    lang = list(zip(language.index[:10], lang_abbr.index[:10]))
+    data = [go.Pie(labels=['{}: {}'.format(a[1], a[0]) for a in lang],
+                   values=language.values[:10])]
+    return data
