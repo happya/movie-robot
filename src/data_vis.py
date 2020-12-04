@@ -42,6 +42,29 @@ def visualize_num_movies_companies(df):
     return fig
 
 
+def visualize_num_movies_countries(df):
+    countries = df['country_name'].value_counts()
+
+    data = [go.Bar(
+        name='num_movies_made_by_countries',
+        x=list(countries.index)[:20],
+        y=list(countries.values)[:20], marker={
+            "color": "orange",
+            "line": {
+                "width": 2,
+                "color": "orange"
+            }})]
+    layout = go.Layout(title='Numbers of movies made by different countries')
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_xaxes(tickangle=45)
+    return fig
+
+
+def data_url_link(df, title):
+    link_col = df['homepage'][df['title'] == title]
+    return link_col
+
+
 def data_genre(df, year):
     if year == 'all':
         genre_col = df['genre_names']

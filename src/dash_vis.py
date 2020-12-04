@@ -34,6 +34,7 @@ def prepare_go_figs():
     go_figs = {
         'movie_years': visualize_num_movies_years(df),
         'movie_companies': visualize_num_movies_companies(df),
+        'movie_countries': visualize_num_movies_countries(df),
     }
 
     return go_figs
@@ -53,7 +54,8 @@ def get_graphs_from_all_data(go_figs):
     return html.Div([
         html.Div([
             dcc.Graph(id='movie-years', figure=go_figs['movie_years']),
-            dcc.Graph(id='movie-companies', figure=go_figs['movie_companies'])
+            dcc.Graph(id='movie-companies', figure=go_figs['movie_companies']),
+            dcc.Graph(id='movie-countries', figure=go_figs['movie_countries'])
         ], style={'display': 'flex', 'flex-direction': 'column'}),
         html.Div(
             [
@@ -70,6 +72,17 @@ def get_graphs_from_all_data(go_figs):
             ],
             style={'display': 'inline-block', 'width': '100%'}
         ),
+        # html.Div(
+        #     [
+        #         html.Div([
+        #             html.P('Please select a movie name'),
+        #             _get_drop_down('movie-title-select', 'title')],
+        #             html.Div(id='movie-link'),
+        #             style={'display': 'inline-block', 'width': '49%'}),
+        #     ],
+        #     style={'display': 'inline-block', 'width': '100%'}
+        # ),
+
 
     ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'})
 
@@ -82,6 +95,20 @@ def _update_graph_pie(selected, func, title):
     fig = go.Figure(data=data, layout=layout)
     fig.update_traces(textposition='inside', textinfo='percent+label')
     return fig
+
+
+# def _update_link_string(selected, func, title):
+#     link = func(df, selected)
+#     message = title + link
+#     return link
+#
+#
+# @app.callback(
+#     Output('movie-link', 'object'),
+#     Input('movie-title-select', 'value'))
+# def update_url_link(selected_title):
+#     title = 'The external link of the movie ' + selected_title
+#     return _update_link_string(selected_title, data_url_link, title)
 
 
 @app.callback(
@@ -97,7 +124,7 @@ def update_lang_year_graph(selected_year):
     Input('genre-year-option', 'value')
 )
 def update_genre_year_graph(selected_year):
-    title = 'Language of Movies in year ' + selected_year
+    title = 'Genre of Movies in year ' + selected_year
     return _update_graph_pie(selected_year, data_genre, title)
     data = data_(df, selected_year)
     layout = go.Layout(
