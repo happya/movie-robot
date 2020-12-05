@@ -60,8 +60,26 @@ def visualize_num_movies_countries(df):
     return fig
 
 
+def visualize_voting_range(df):
+    fig = go.Figure(data=[
+        go.Histogram(x=df['vote_average'])
+    ])
+
+    data = [go.Histogram(x=df['vote_average'])]
+    layout = go.Layout(title='Vote average count')
+    fig = go.Figure(data=data, layout=layout)
+    return fig
+
+
+def data_movie_info(df, title):
+    info_table = df[df['title'] == title]
+    return info_table
+
+
 def data_url_link(df, title):
     link_col = df['homepage'][df['title'] == title]
+    # if link_col.size == 0:
+    #     return 'no_link'
     return link_col
 
 
