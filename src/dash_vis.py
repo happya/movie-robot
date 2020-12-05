@@ -5,6 +5,7 @@ import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table as dt
 import plotly as py
 import plotly.graph_objects as go
 import pandas as pd
@@ -34,6 +35,8 @@ def prepare_go_figs():
     go_figs = {
         'movie_years': visualize_num_movies_years(df),
         'movie_companies': visualize_num_movies_companies(df),
+        'movie_countries': visualize_num_movies_countries(df),
+        'movie_votes': visualize_voting_range(df),
     }
 
     return go_figs
@@ -49,11 +52,23 @@ def _get_drop_down(id, col):
     )
 
 
+def _get_drop_down_title(id, col):
+    return dcc.Dropdown(
+        id=id,
+        options=[
+            {'label': str(i), 'value': str(i)}
+            for i in sorted(list(df[col].unique()), reverse=False)
+        ],
+    )
+
+
 def get_graphs_from_all_data(go_figs):
     return html.Div([
         html.Div([
             dcc.Graph(id='movie-years', figure=go_figs['movie_years']),
-            dcc.Graph(id='movie-companies', figure=go_figs['movie_companies'])
+            dcc.Graph(id='movie-companies', figure=go_figs['movie_companies']),
+            dcc.Graph(id='movie-countries', figure=go_figs['movie_countries']),
+            dcc.Graph(id='movie-votes', figure=go_figs['movie_votes']),
         ], style={'display': 'flex', 'flex-direction': 'column'}),
         html.Div(
             [
@@ -66,10 +81,19 @@ def get_graphs_from_all_data(go_figs):
                     html.P('Please select a year: (default by all)'),
                     _get_drop_down('lang-year-option', 'year')
                 ], style={'display': 'inline-block', 'width': '49%'}),
-                dcc.Graph(id='lang-year-pie')
+                dcc.Graph(id='lang-year-pie'),
+                html.Div([
+                    html.P('Please select a movie name to review its introduction'),
+                    _get_drop_down_title('movie-title-select-info', 'title')],
+                    style={'display': 'inline-block', 'width': '49%'}),
+                dt.DataTable(id='movie-info-table',
+                             columns=[{"name": i, "id": i} for i in ["homepage", "company_name", "release_date", "genre_names"]],
+                             ),
+
             ],
             style={'display': 'inline-block', 'width': '100%'}
         ),
+
 
     ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'})
 
@@ -85,6 +109,16 @@ def _update_graph_pie(selected, func, title):
 
 
 @app.callback(
+    Output('movie-info-table', 'data'),
+    Input('movie-title-select-info', 'value'))
+def update_movie_info(selected_title):
+    # title = "The link is "
+    # message = _update_link_string(selected_title, data_url_link, title)
+    dff = data_movie_info(df, selected_title)
+    return dff.to_dict('records')
+
+
+@app.callback(
     Output('lang-year-pie', 'figure'),
     Input('lang-year-option', 'value'))
 def update_lang_year_graph(selected_year):
@@ -97,7 +131,7 @@ def update_lang_year_graph(selected_year):
     Input('genre-year-option', 'value')
 )
 def update_genre_year_graph(selected_year):
-    title = 'Language of Movies in year ' + selected_year
+    title = 'Genre of Movies in year ' + selected_year
     return _update_graph_pie(selected_year, data_genre, title)
     data = data_(df, selected_year)
     layout = go.Layout(

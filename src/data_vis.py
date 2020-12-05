@@ -42,6 +42,40 @@ def visualize_num_movies_companies(df):
     return fig
 
 
+def visualize_num_movies_countries(df):
+    countries = df['country_name'].value_counts()
+
+    data = [go.Bar(
+        name='num_movies_made_by_countries',
+        x=list(countries.index)[:20],
+        y=list(countries.values)[:20], marker={
+            "color": "orange",
+            "line": {
+                "width": 2,
+                "color": "orange"
+            }})]
+    layout = go.Layout(title='Numbers of movies made by different countries')
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_xaxes(tickangle=45)
+    return fig
+
+
+def visualize_voting_range(df):
+    fig = go.Figure(data=[
+        go.Histogram(x=df['vote_average'])
+    ])
+
+    data = [go.Histogram(x=df['vote_average'])]
+    layout = go.Layout(title='Vote average count')
+    fig = go.Figure(data=data, layout=layout)
+    return fig
+
+
+def data_movie_info(df, title):
+    info_table = df[df['title'] == title]
+    return info_table
+
+
 def data_genre(df, year):
     if year == 'all':
         genre_col = df['genre_names']
