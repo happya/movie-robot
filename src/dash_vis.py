@@ -97,7 +97,7 @@ def get_graphs_from_all_data(go_figs):
                         style={'display': 'inline-block', 'width': '49%'}),
                     dt.DataTable(id='movie-info-table',
                                  columns=[{"name": i, "id": i} for i in
-                                          ["homepage", "company_name", "release_date", "genre_names"]],
+                                          ["homepage", "company_name", "release_date", "genre_names", "vote_average"]],
                                  ),
                 ], style={'width': '80%', 'margin': '20px auto'}),
 
