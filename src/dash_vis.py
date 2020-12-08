@@ -61,6 +61,8 @@ def _get_drop_down_title(id, col):
             for i in sorted(list(df[col].unique()), reverse=False)
         ],
     )
+
+
 def geo_graph():
     country = pd.DataFrame(df['country_name'].value_counts().reset_index().values,
                            columns=['country', 'total'])
@@ -80,31 +82,11 @@ def geo_graph():
     fig = go.Figure(data=data, layout=layout)
     return fig
 
+
 def get_graphs_from_all_data(go_figs):
     return html.Div([
-        html.Div([
-            html.Div([
-            dcc.Graph(id='movie-years', figure=go_figs['movie_years']),
-            dcc.Graph(id='movie-companies', figure=go_figs['movie_companies']),
-            dcc.Graph(id='movie-countries', figure=go_figs['movie_countries']),
-            dcc.Graph(id='movie-votes', figure=go_figs['movie_votes']),
-        ], style={'display': 'flex', 'flex-direction': 'column'}),
-            html.Div(
-                [
-                    html.Div([
-                        html.P('Please select year: (default by all)'),
-                        _get_drop_down('genre-year-option', 'year')],
-                        style={'display': 'inline-block', 'width': '49%'}),
-                    dcc.Graph(id='genre-year-pie'),
-                    html.Div([
-                        html.P('Please select a year: (default by all)'),
-                        _get_drop_down('lang-year-option', 'year')
-                    ], style={'display': 'inline-block', 'width': '49%'}),
-                    dcc.Graph(id='lang-year-pie'),
-                ],
-                style={'display': 'inline-block', 'width': '100%'}
-            ),
-        ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'}),
+        # general information of a movie
+        html.H2('General information of a movie'),
         html.Div([
             html.Div([
                 html.P('Please select a movie name to review its introduction'),
@@ -114,8 +96,45 @@ def get_graphs_from_all_data(go_figs):
                          columns=[{"name": i, "id": i} for i in
                                   ["homepage", "company_name", "release_date", "genre_names"]],
                          ),
-        ])
-    ])
+        ], style={'width': '80%', 'margin': '20px auto'}),
+
+        # distribution charts
+        html.H2('Distribution of Movie Information'),
+        html.Div([
+
+            html.Div([
+                dcc.Graph(id='movie-years', figure=go_figs['movie_years']),
+                dcc.Graph(id='movie-companies', figure=go_figs['movie_companies']),
+            ], style={'display': 'flex', 'flex-direction': 'column'}),
+            html.Div([
+                dcc.Graph(id='movie-countries', figure=go_figs['movie_countries']),
+                dcc.Graph(id='movie-votes', figure=go_figs['movie_votes']),
+            ])
+        ], style={'display': 'flex', 'flex-direction': 'column'}),
+
+        # pie charts
+        html.H2('Pie Chart of Movie Genres and Languages'),
+        html.Div([
+            html.Div([
+                html.P('Please select year: (default by all)'),
+                _get_drop_down('genre-year-option', 'year'),
+                dcc.Graph(id='genre-year-pie')
+            ], style={'display': 'flex', 'flex-direction': 'column', 'width': '49%'}),
+            html.Div([
+                html.P('Please select a year: (default by all)'),
+                _get_drop_down('lang-year-option', 'year'),
+                dcc.Graph(id='lang-year-pie'),
+            ], style={'display': 'flex', 'flex-direction': 'column', 'width': '49%'}),
+
+        ], style={'display': 'flex', 'width': '100%', 'margin': '20px auto'}),
+
+        # geograph
+        html.H2('Geograph of Movie Production Countries'),
+        html.Div([
+            dcc.Graph(id='geo-movie-countries', figure=geo_graph())
+        ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'}
+        )
+    ], style={'width': '80%', 'margin': '20px auto'})
 
 
 def _update_graph_pie(selected, func, title):
