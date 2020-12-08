@@ -9,6 +9,7 @@ import dash_table as dt
 import plotly as py
 import plotly.graph_objects as go
 import pandas as pd
+import numpy as np
 
 # init dash app
 from dash.dependencies import Input, Output
@@ -60,7 +61,24 @@ def _get_drop_down_title(id, col):
             for i in sorted(list(df[col].unique()), reverse=False)
         ],
     )
+def geo_graph():
+    country = pd.DataFrame(df['country_name'].value_counts().reset_index().values,
+                           columns=['country', 'total'])
+    # country = country[country['total'] > 0]
+    data = go.Choropleth(
+        locationmode='country names',
+        z=np.log10(country['total'].to_list()),
+        locations=country['country'],
+        text=country['country'] + ': ' + country['total'].apply(str),
+        colorscale='Blues',
+        colorbar=dict(title='# movies',
+                      tickvals=[0, 1, 2, 3, 3.477],
+                      ticktext=['1', '10', '100', '1000', '3000'])
 
+    )
+    layout = go.Layout(title='Movies Produced by Countries')
+    fig = go.Figure(data=data, layout=layout)
+    return fig
 
 def get_graphs_from_all_data(go_figs):
     return html.Div([
