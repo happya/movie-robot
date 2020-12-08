@@ -65,37 +65,39 @@ def _get_drop_down_title(id, col):
 def get_graphs_from_all_data(go_figs):
     return html.Div([
         html.Div([
+            html.Div([
             dcc.Graph(id='movie-years', figure=go_figs['movie_years']),
             dcc.Graph(id='movie-companies', figure=go_figs['movie_companies']),
             dcc.Graph(id='movie-countries', figure=go_figs['movie_countries']),
             dcc.Graph(id='movie-votes', figure=go_figs['movie_votes']),
         ], style={'display': 'flex', 'flex-direction': 'column'}),
-        html.Div(
-            [
-                html.Div([
-                    html.P('Please select year: (default by all)'),
-                    _get_drop_down('genre-year-option', 'year')],
-                    style={'display': 'inline-block', 'width': '49%'}),
-                dcc.Graph(id='genre-year-pie'),
-                html.Div([
-                    html.P('Please select a year: (default by all)'),
-                    _get_drop_down('lang-year-option', 'year')
-                ], style={'display': 'inline-block', 'width': '49%'}),
-                dcc.Graph(id='lang-year-pie'),
-                html.Div([
-                    html.P('Please select a movie name to review its introduction'),
-                    _get_drop_down_title('movie-title-select-info', 'title')],
-                    style={'display': 'inline-block', 'width': '49%'}),
-                dt.DataTable(id='movie-info-table',
-                             columns=[{"name": i, "id": i} for i in ["homepage", "company_name", "release_date", "genre_names"]],
-                             ),
-
-            ],
-            style={'display': 'inline-block', 'width': '100%'}
-        ),
-
-
-    ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'})
+            html.Div(
+                [
+                    html.Div([
+                        html.P('Please select year: (default by all)'),
+                        _get_drop_down('genre-year-option', 'year')],
+                        style={'display': 'inline-block', 'width': '49%'}),
+                    dcc.Graph(id='genre-year-pie'),
+                    html.Div([
+                        html.P('Please select a year: (default by all)'),
+                        _get_drop_down('lang-year-option', 'year')
+                    ], style={'display': 'inline-block', 'width': '49%'}),
+                    dcc.Graph(id='lang-year-pie'),
+                ],
+                style={'display': 'inline-block', 'width': '100%'}
+            ),
+        ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'}),
+        html.Div([
+            html.Div([
+                html.P('Please select a movie name to review its introduction'),
+                _get_drop_down_title('movie-title-select-info', 'title')],
+                style={'display': 'inline-block', 'width': '49%'}),
+            dt.DataTable(id='movie-info-table',
+                         columns=[{"name": i, "id": i} for i in
+                                  ["homepage", "company_name", "release_date", "genre_names"]],
+                         ),
+        ])
+    ])
 
 
 def _update_graph_pie(selected, func, title):
