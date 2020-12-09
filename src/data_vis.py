@@ -113,7 +113,7 @@ def recommend_k_movies_genre(df, genre, k):
     movie_rate = []
     while heap:
         s, m = heapq.heappop(heap)
-        movie_rate.insert(0, (m, '------------------', s))
+        movie_rate.insert(0, (s, ', ', m))
 
     return movie_rate
 
@@ -145,6 +145,6 @@ def recommend_k_movies_year(df, year, k):
     movie_rate = []
     while heap:
         s, m = heapq.heappop(heap)
-        movie_rate.insert(0, (m, '------------------', s))
+        movie_rate.insert(0, (s, ', ', m))
 
     return movie_rate
