@@ -160,7 +160,7 @@ def get_graphs_from_all_data(go_figs):
                     dcc.Graph(id='geo-movie-countries', figure=geo_graph())
                 ], style={'display': 'flex', 'width': '100%', 'margin': 'auto'}
                 )]
-            ),
+                    ),
             dcc.Tab(label='Recommendation', children=[
                 # Recommend top kth movies base on genre and vote_average
                 html.H2('Recommend top kth movies base on genre and vote_average'),
@@ -169,8 +169,10 @@ def get_graphs_from_all_data(go_figs):
                         html.P('Please select a desired genre to get the recommendations'),
                         _get_drop_down_genres('recommend-genre-vote-input')
                     ],
-                        style={'display': 'inline-block', 'width': '49%'}),
-                    html.Div(id='recommend-genre-vote-output'),
+                        style={'display': 'inline-block', 'width': '49%', 'margin': '20px auto'}),
+                    dt.DataTable(id='recommend-genre-vote-output',
+                                 columns=[{'name': i, 'id': i} for i in ["movie", 'rating']],
+                                 style_cell={'textAlign': 'center'}),
                 ], style={'width': '80%', 'margin': '20px auto'}),
                 # Recommend top kth movies base on year and vote_average
                 html.H2('Recommend top kth movies base on year and vote_average'),
@@ -179,8 +181,11 @@ def get_graphs_from_all_data(go_figs):
                         html.P('Please select a specific year to get the recommendations'),
                         _get_drop_down_year('recommend-genre-year-input', 'year')
                     ],
-                        style={'display': 'inline-block', 'width': '49%'}),
-                    html.Div(id='recommend-genre-year-output'),
+                        style={'display': 'inline-block', 'width': '49%', 'margin': '20px auto'}),
+                    dt.DataTable(id='recommend-genre-year-output',
+                                 columns=[{'name': i, 'id': i} for i in ["movie", 'rating']],
+                                 style_cell={'textAlign': 'center'}
+                                 ),
                 ], style={'width': '80%', 'margin': '20px auto'})
 
             ]
@@ -192,7 +197,7 @@ def get_graphs_from_all_data(go_figs):
 def _update_graph_pie(selected, func, title):
     data = func(df, selected)
     layout = go.Layout(
-        title=title + str(selected)
+        title=title
     )
     fig = go.Figure(data=data, layout=layout)
     fig.update_traces(textposition='inside', textinfo='percent+label')
@@ -200,18 +205,20 @@ def _update_graph_pie(selected, func, title):
 
 
 @app.callback(
-    Output('recommend-genre-vote-output', 'children'),
+    Output('recommend-genre-vote-output', 'data'),
     Input('recommend-genre-vote-input', 'value'))
 def update_genre_recommend(selected_genre):
     # title = "The link is "
     # message = _update_link_string(selected_title, data_url_link, title)
     genre_string = str(selected_genre)
     dff = recommend_k_movies_genre(df, genre_string.lower(), 10)
-    return html.Ul([html.Li(x) for x in dff])
+    sorted_df = sorted(dff.items(), key=lambda x: -x[1])
+    return [{"movie": i[0], "rating": i[1]} for i in sorted_df]
+    # return html.Ul([html.Li(x) for x in dff])
 
 
 @app.callback(
-    Output('recommend-genre-year-output', 'children'),
+    Output('recommend-genre-year-output', 'data'),
     Input('recommend-genre-year-input', 'value'))
 def update_genre_recommend(selected_year):
     # title = "The link is "
@@ -220,6 +227,7 @@ def update_genre_recommend(selected_year):
     if isinstance(selected_year, str):
         year = int(selected_year)
     dff = recommend_k_movies_year(df, year, 10)
+    return [{"movie": i[0], "rating": i[1]} for i in dff]
     return html.Ul([html.Li(x) for x in dff])
 
 
