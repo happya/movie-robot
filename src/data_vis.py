@@ -110,15 +110,11 @@ def recommend_k_movies_genre(df, genre, k):
         if len(heap) > k:
             heapq.heappop(heap)
 
-    movie_rate = []
     rate_movie = {}
     while heap:
         s, m = heapq.heappop(heap)
-        movie_rate.insert(0, (s, ', ', m))
         rate_movie[m] = s
-    # rate_movie = sorted(rate_movie, key=lambda x: -x[0])
     return rate_movie
-    return movie_rate
 
 
 def get_year(release_date):
@@ -133,24 +129,8 @@ def get_year(release_date):
 
 def recommend_k_movies_year(df, year, k):
     # return list [(movie1, rate1), movie2, rate2), ...] size is k
-    heap = []
     movies = df[['original_title', 'vote_average']][df['year'] == int(year)]
     movies_data = movies.to_dict('split')['data']
     movies_dict = {i[0]: i[1] for i in movies_data}
     k = k if len(movies_dict) >= k else len(movies_dict)
     return sorted(movies_dict.items(), key=lambda x: -x[1])[:k]
-    # for i in range(len(df)):
-    #     date = df.loc[i, 'release_date']
-    #     y = get_year(date)
-    #     if y == -1 or y != year:
-    #         continue
-    #     m_name = df.loc[i, 'original_title']
-    #     m_rate = df.loc[i, 'vote_average']
-    #     heapq.heappush(heap, (m_rate, m_name))
-    #     if len(heap) > k:
-    #         heapq.heappop(heap)
-    #
-    # movie_rate = []
-    # while heap:
-    #     s, m = heapq.heappop(heap)
-    #     movie_rate.insert(0, (s, ', ', m))

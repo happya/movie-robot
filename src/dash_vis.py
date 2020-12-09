@@ -228,7 +228,7 @@ def update_genre_recommend(selected_year):
         year = int(selected_year)
     dff = recommend_k_movies_year(df, year, 10)
     return [{"movie": i[0], "rating": i[1]} for i in dff]
-    return html.Ul([html.Li(x) for x in dff])
+    # return html.Ul([html.Li(x) for x in dff])
 
 
 @app.callback(
@@ -256,13 +256,6 @@ def update_lang_year_graph(selected_year):
 def update_genre_year_graph(selected_year):
     title = 'Genre of Movies in year ' + selected_year
     return _update_graph_pie(selected_year, data_genre, title)
-    data = data_(df, selected_year)
-    layout = go.Layout(
-        title='Language of Movies in year ' + selected_year
-    )
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_traces(textposition='inside', textinfo='percent+label')
-    return fig
 
 
 def _head():
