@@ -76,13 +76,6 @@ def data_movie_info(df, title):
     return info_table
 
 
-def data_url_link(df, title):
-    link_col = df['homepage'][df['title'] == title]
-    # if link_col.size == 0:
-    #     return 'no_link'
-    return link_col
-
-
 def data_genre(df, year):
     if year == 'all':
         genre_col = df['genre_names']
