@@ -2,7 +2,7 @@ from collections import defaultdict
 
 import plotly.express as px
 import plotly.graph_objects as go
-
+import heapq
 
 def visualize_num_movies_years(df):
     year_count = df['year'].value_counts().sort_index()
@@ -95,3 +95,56 @@ def data_language(df, year):
     data = [go.Pie(labels=['{}: {}'.format(a[1], a[0]) for a in lang],
                    values=language.values[:10])]
     return data
+
+
+def recommend_k_movies_genre(df, genre, k):
+    # return list [(movie1, rate1), movie2, rate2), ...] size is k
+    heap = []
+    for i in range(len(df)):
+        genre_list = df.loc[i, 'genre_names']
+        if genre not in genre_list:
+            continue
+        m_name = df.loc[i, 'original_title']
+        m_rate = df.loc[i, 'vote_average']
+        heapq.heappush(heap, (m_rate, m_name))
+        if len(heap) > k:
+            heapq.heappop(heap)
+
+    movie_rate = []
+    while heap:
+        s, m = heapq.heappop(heap)
+        movie_rate.insert(0, (m, '------------------', s))
+
+    return movie_rate
+
+
+def get_year(release_date):
+    if not isinstance(release_date, str):
+        return -1
+    year_month_day = release_date.split('-')
+    if len(year_month_day) != 3:
+        return -1
+    year = int(year_month_day[0])
+    return year
+
+
+def recommend_k_movies_year(df, year, k):
+    # return list [(movie1, rate1), movie2, rate2), ...] size is k
+    heap = []
+    for i in range(len(df)):
+        date = df.loc[i, 'release_date']
+        y = get_year(date)
+        if y == -1 or y != year:
+            continue
+        m_name = df.loc[i, 'original_title']
+        m_rate = df.loc[i, 'vote_average']
+        heapq.heappush(heap, (m_rate, m_name))
+        if len(heap) > k:
+            heapq.heappop(heap)
+
+    movie_rate = []
+    while heap:
+        s, m = heapq.heappop(heap)
+        movie_rate.insert(0, (m, '------------------', s))
+    print(movie_rate)
+    return movie_rate
