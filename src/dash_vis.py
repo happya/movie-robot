@@ -162,8 +162,8 @@ def get_graphs_from_all_data(go_figs):
                 )]
                     ),
             dcc.Tab(label='Recommendation', children=[
-                # Recommend top kth movies base on genre and vote_average
-                html.H2('Recommend top kth movies base on genre and vote_average'),
+                # Recommend top-10 movies base on genre and vote_average
+                html.H2('Recommend top-10 movies base on genre and vote_average'),
                 html.Div([
                     html.Div([
                         html.P('Please select a desired genre to get the recommendations'),
@@ -174,8 +174,8 @@ def get_graphs_from_all_data(go_figs):
                                  columns=[{'name': i, 'id': i} for i in ["movie", 'rating']],
                                  style_cell={'textAlign': 'center'}),
                 ], style={'width': '80%', 'margin': '20px auto'}),
-                # Recommend top kth movies base on year and vote_average
-                html.H2('Recommend top kth movies base on year and vote_average'),
+                # Recommend top-10 movies base on year and vote_average
+                html.H2('Recommend top-10 movies base on year and vote_average'),
                 html.Div([
                     html.Div([
                         html.P('Please select a specific year to get the recommendations'),
