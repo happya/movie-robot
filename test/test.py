@@ -43,6 +43,8 @@ class UnitTests(unittest.TestCase):
         res = recommend_k_movies_year(df, 2017, 10)
         self.assertEqual(len(res), 1)
 
+
+
     # edge case test 2
     # test recommend_k_movies_genre()
     def test4(self):
@@ -52,8 +54,9 @@ class UnitTests(unittest.TestCase):
         # our dataset only have 34 'foreign' movies
         res = recommend_k_movies_genre(df, 'foreign', 50)
         self.assertEqual(len(res), 34)
-    
-    # edge case test 2
+
+
+    # edge case test 3
     # test recommend_k_movies_genre()
     def test5(self):
         # edge tests -- if the dataframe is empty or None
@@ -62,45 +65,54 @@ class UnitTests(unittest.TestCase):
             recommend_k_movies_genre(df, 'action', 10)
 
 
-    """
-    # one-shot test 1 
-    def test_success5(self):
-        print("one-shot test 1")
-        # data = [[1, 1, 135], 
-        #         [2, 5, 433],
-        #         [3, 2, 319],
-        #         [4, 4, 252],
-        #         [5, 5, 421],
-        #         [2, 4, 214],
-        #         [3, 6, 501]] 
-        # query = [1, 3]
-        # k = 3
-        # ans should be 222.67
-        data5 = [[1, 1, 135], [2, 5, 433], [3, 2, 319], [4, 4, 252], [5, 5, 421], [2, 4, 214], [3, 6, 501]]
-        mean5 = knn_regression(3, data5, [1, 3])
-        print(mean5)
-        self.assertEqual(mean5, 222.67)
-        
+    # edge case test 4
+    # test recommend_k_movies_year()
+    def test6(self):
+        # edge tests -- if the dataframe is empty or None
+        with self.assertRaises(ValueError):
+            df = {}
+            recommend_k_movies_year(df, 'action', 10)
+
+    # edge case test 5
+    # test recommend_k_movies_genre()
+    def test7(self):
+        # edge tests -- if the genre type is not string
+        with self.assertRaises(ValueError):
+            data_path = os.path.abspath(os.path.join(__file__, '../../data/movies_cleaned.csv'))
+            df = prepare_data(data_path)
+            recommend_k_movies_genre(df, 111, 10)
+
+
+    # edge case test 6
+    # test recommend_k_movies_year()
+    def test8(self):
+        # edge tests -- if the year type is not integer
+        with self.assertRaises(ValueError):
+            data_path = os.path.abspath(os.path.join(__file__, '../../data/movies_cleaned.csv'))
+            df = prepare_data(data_path)
+            recommend_k_movies_year(df, '2011', 10)
+
+
+    # one-shot test 1
+    # test recommend_k_movies_genre()
+    def test9(self):
+        data_path = os.path.abspath(os.path.join(__file__, '../../data/movies_cleaned.csv'))
+        df = prepare_data(data_path)
+        res = recommend_k_movies_genre(df, 'action', 5)
+        ans = {'The Lord of the Rings: The Return of the King': 8.1, 'The Dark Knight': 8.2, \
+                'The Empire Strikes Back': 8.2, '七人の侍': 8.2, "One Man's Hero": 9.3}
+        self.assertEqual(res, ans)
+
 
     # one-shot test 2
-    def test_success6(self):
-        print("one-shot test 2")
-        # data = [[1, 1, 135], 
-        #         [2, 5, 433],
-        #         [3, 2, 319],
-        #         [4, 4, 252],
-        #         [5, 5, 421],
-        #         [2, 4, 214],
-        #         [3, 6, 501]] 
-        # query = [7, 8]
-        # k = 2
-        # ans should be 391.33
-        data6 = [[1, 1, 135], [2, 5, 433], [3, 2, 319], [4, 4, 252], [5, 5, 421], [2, 4, 214], [3, 6, 501]]
-        mean6 = knn_regression(3, data6, [7, 8])
-        print(mean6)
-        self.assertEqual(mean6, 391.33)
+    # test recommend_k_movies_year()
+    def test10(self):
+        data_path = os.path.abspath(os.path.join(__file__, '../../data/movies_cleaned.csv'))
+        df = prepare_data(data_path)
+        res = recommend_k_movies_year(df, 2017, 5)
+        ans = [('Growing Up Smith', 7.4)]
+        self.assertEqual(res, ans)
 
-    """
 
 if __name__ == '__main__':
     unittest.main()
