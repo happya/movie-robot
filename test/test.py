@@ -34,7 +34,6 @@ class UnitTests(unittest.TestCase):
     # test recommend_k_movies_year()
     def test_recommend_year_result(self):
         # edge tests -- if the size of result (size) smaller than k, k = size
-
         # our dataset only have one movie in 2017
         res = recommend_k_movies_year(self.df, 2017, 10)
         self.assertEqual(len(res), 1)

@@ -41,10 +41,8 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 - pandas
 - numpy
 - matplotlib
-- seaborn
 - plotly
 - dash
-- scikit-learn
 
 
 ...
