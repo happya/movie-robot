@@ -100,7 +100,7 @@ def data_language(df, year):
 def recommend_k_movies_genre(df, genre, k):
     # return list [(movie1, rate1), movie2, rate2), ...] size is k
     if len(df) == 0:
-        raise AttributeError('Empty data is not allowed.')
+        raise ValueError('Empty data is not allowed.')
 
     if not isinstance(genre, str):
         raise TypeError('Genre type should be string.')
@@ -136,10 +136,7 @@ def get_year(release_date):
 def recommend_k_movies_year(df, year, k):
     # return list [(movie1, rate1), movie2, rate2), ...] size is k
     if len(df) == 0:
-        raise AttributeError('Empty data is not allowed.')
-
-    if not isinstance(year, int):
-        raise TypeError('Year type should be integer.')
+        raise ValueError('Empty data is not allowed.')
 
     movies = df[['original_title', 'vote_average']][df['year'] == int(year)]
     movies_data = movies.to_dict('split')['data']
