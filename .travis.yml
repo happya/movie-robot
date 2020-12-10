@@ -1,0 +1,20 @@
+language: python
+python:
+  - 3.8
+
+branches:
+  only:
+    - master
+    - /^feature/
+    - /^test/
+    - /^weining/
+    - /^ctyang/
+    - /^yyi/
+
+install:
+  - pip install unittest
+  - pip install -r requirements
+
+script:
+  - PYTHONPATH=:$PYTHONPATH python -m unittest -v test/test.py
+
