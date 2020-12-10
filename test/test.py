@@ -72,7 +72,7 @@ class UnitTests(unittest.TestCase):
     def test_recommend_movies_genre(self):
         res = recommend_k_movies_genre(self.df, 'action', 5)
         ans = {'The Lord of the Rings: The Return of the King': 8.1, 'The Dark Knight': 8.2, \
-               'The Empire Strikes Back': 8.2, '七人の侍': 8.2, "One Man's Hero": 9.3}
+               'The Empire Strikes Back': 8.2, 'Seven Samurai': 8.2, "One Man's Hero": 9.3}
         self.assertEqual(res, ans)
 
     # one-shot test 2

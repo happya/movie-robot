@@ -4,6 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import heapq
 
+
 def visualize_num_movies_years(df):
     year_count = df['year'].value_counts().sort_index()
 
@@ -110,7 +111,7 @@ def recommend_k_movies_genre(df, genre, k):
         genre_list = df.loc[i, 'genre_names']
         if genre not in genre_list:
             continue
-        m_name = df.loc[i, 'original_title']
+        m_name = df.loc[i, 'title']
         m_rate = df.loc[i, 'vote_average']
         heapq.heappush(heap, (m_rate, m_name))
         if len(heap) > k:
@@ -138,7 +139,7 @@ def recommend_k_movies_year(df, year, k):
     if len(df) == 0:
         raise ValueError('Empty data is not allowed.')
 
-    movies = df[['original_title', 'vote_average']][df['year'] == int(year)]
+    movies = df[['title', 'vote_average']][df['year'] == int(year)]
     movies_data = movies.to_dict('split')['data']
     movies_dict = {i[0]: i[1] for i in movies_data}
     k = k if len(movies_dict) >= k else len(movies_dict)
