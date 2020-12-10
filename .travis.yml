@@ -5,11 +5,6 @@ python:
 branches:
   only:
     - master
-    - /^feature/
-    - /^test/
-    - /^weining/
-    - /^ctyang/
-    - /^yyi/
 
 install:
   - pip install unittest
