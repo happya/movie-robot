@@ -258,7 +258,7 @@ def update_genre_recommend(selected_genre):
     '''
     Update the recommended movies results
     :param selected_genre: the selected genre
-    :return: result data
+    :return: result table
     '''
     genre_string = str(selected_genre)
     dff = recommend_k_movies_genre(df, genre_string.lower(), 10)
@@ -272,9 +272,9 @@ def update_genre_recommend(selected_genre):
     Input('recommend-genre-year-input', 'value'))
 def update_genre_recommend(selected_year):
     '''
-    Update
-    :param selected_year:
-    :return:
+    Update the recommended movies results
+    :param selected_year: the selected year
+    :return: result table
     '''
     year = 1000
     if isinstance(selected_year, str):
@@ -288,8 +288,11 @@ def update_genre_recommend(selected_year):
     Output('movie-info-table', 'data'),
     Input('movie-title-select-info', 'value'))
 def update_movie_info(selected_title):
-    # title = "The link is "
-    # message = _update_link_string(selected_title, data_url_link, title)
+    '''
+    Update the movie information table
+    :param selected_title: the selected title of the movie
+    :return: the data to be shown in the table
+    '''
     dff = data_movie_info(df, selected_title)
     return dff.to_dict('records')
 
@@ -298,6 +301,11 @@ def update_movie_info(selected_title):
     Output('lang-year-pie', 'figure'),
     Input('lang-year-option', 'value'))
 def update_lang_year_graph(selected_year):
+    '''
+    Update the language_year_chart
+    :param selected_year: the selected year
+    :return: the corresponding figure
+    '''
     title = 'Language of Movies in year ' + selected_year
     return _update_graph_pie(selected_year, data_language, title)
 
@@ -307,6 +315,11 @@ def update_lang_year_graph(selected_year):
     Input('genre-year-option', 'value')
 )
 def update_genre_year_graph(selected_year):
+    '''
+    Update the genre_year_chart
+    :param selected_year: the selected year
+    :return: the corresponding figure
+    '''
     title = 'Genre of Movies in year ' + selected_year
     return _update_graph_pie(selected_year, data_genre, title)
 

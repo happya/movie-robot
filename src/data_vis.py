@@ -6,6 +6,11 @@ import heapq
 
 
 def visualize_num_movies_years(df):
+    '''
+    Illustrate the figure of numbers of movies per year
+    :param df: the processed data
+    :return: the corresponding figure
+    '''
     year_count = df['year'].value_counts().sort_index()
 
     data = [go.Bar(name='movies/year', x=year_count.index, y=year_count.values)]
@@ -15,6 +20,11 @@ def visualize_num_movies_years(df):
 
 
 def get_genres_distribution(genre_col):
+    '''
+    Get the distribution for genres
+    :param genre_col: the genre column
+    :return: the corresponding data
+    '''
     genre_count = dict()
     for genre_list in genre_col:
         for g in genre_list.strip('[]').split(','):
@@ -26,6 +36,11 @@ def get_genres_distribution(genre_col):
 
 
 def visualize_num_movies_companies(df):
+    '''
+    Illustrate the figure of numbers of movies made by different companies
+    :param df: the processed data
+    :return: the corresponding figure
+    '''
     companies = df['company_name'].value_counts()
 
     data = [go.Bar(
@@ -44,6 +59,11 @@ def visualize_num_movies_companies(df):
 
 
 def visualize_num_movies_countries(df):
+    '''
+    Illustrate the figure of numbers of movies made by different countries
+    :param df: the processed data
+    :return: the corresponding figure
+    '''
     countries = df['country_name'].value_counts()
 
     data = [go.Bar(
@@ -62,6 +82,11 @@ def visualize_num_movies_countries(df):
 
 
 def visualize_voting_range(df):
+    '''
+    Illustrate the vote average count figure
+    :param df: the processed data
+    :return: the corresponding figure
+    '''
     fig = go.Figure(data=[
         go.Histogram(x=df['vote_average'])
     ])
@@ -73,11 +98,23 @@ def visualize_voting_range(df):
 
 
 def data_movie_info(df, title):
+    '''
+    Get the information for the specific movie
+    :param df: the processed data
+    :param title: the selected movie title
+    :return: the corresponding result data
+    '''
     info_table = df[df['title'] == title]
     return info_table
 
 
 def data_genre(df, year):
+    '''
+    Get the genre distribution
+    :param df: the processed data
+    :param year: the selected year
+    :return: the corresponding result data
+    '''
     if year == 'all':
         genre_col = df['genre_names']
     else:
@@ -86,6 +123,12 @@ def data_genre(df, year):
 
 
 def data_language(df, year):
+    '''
+    Get the language data for a certain year
+    :param df: the processed data
+    :param year: the selected year
+    :return: the corresponding result data
+    '''
     if year == 'all':
         language = df['lang'].value_counts()
         lang_abbr = df['lang_short'].value_counts()
@@ -99,6 +142,13 @@ def data_language(df, year):
 
 
 def recommend_k_movies_genre(df, genre, k):
+    '''
+    Get the recommended movies based on a selected genre
+    :param df: the processed data
+    :param genre: the selected genre
+    :param k: the number we will get for the result
+    :return: the corresponding result data
+    '''
     # return list [(movie1, rate1), movie2, rate2), ...] size is k
     if len(df) == 0:
         raise ValueError('Empty data is not allowed.')
@@ -125,6 +175,11 @@ def recommend_k_movies_genre(df, genre, k):
 
 
 def get_year(release_date):
+    '''
+    Get the year from a data
+    :param release_date: the released data
+    :return: its year
+    '''
     if not isinstance(release_date, str):
         return -1
     year_month_day = release_date.split('-')
@@ -135,6 +190,13 @@ def get_year(release_date):
 
 
 def recommend_k_movies_year(df, year, k):
+    '''
+    Get the recommended movies based on the selected year
+    :param df: the processed data
+    :param year: the selected year
+    :param k: the number we will get for the result
+    :return: the corresponding result data
+    '''
     # return list [(movie1, rate1), movie2, rate2), ...] size is k
     if len(df) == 0:
         raise ValueError('Empty data is not allowed.')
