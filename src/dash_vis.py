@@ -22,8 +22,12 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # app.css.append_css({"external_url": "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"})
 
-
 def prepare_data(filename):
+    '''
+    Read the csv file to our format
+    :param filename: the name of the input data file
+    :return: pd.read_csv
+    '''
     if filename.endswith('.csv'):
         return pd.read_csv(filename)
 
@@ -33,6 +37,10 @@ df = prepare_data(data_path)
 
 
 def prepare_go_figs():
+    '''
+    Illustrate the static figures on the webpage
+    :return: go_figs
+    '''
     go_figs = {
         'movie_years': visualize_num_movies_years(df),
         'movie_companies': visualize_num_movies_companies(df),
@@ -44,6 +52,12 @@ def prepare_go_figs():
 
 
 def _get_drop_down(id, col):
+    '''
+    Drop_down menu for the pie chart
+    :param id: the object id
+    :param col: the column name
+    :return: the dash component for dropdown menu
+    '''
     return dcc.Dropdown(
         id=id,
         options=[
@@ -54,6 +68,12 @@ def _get_drop_down(id, col):
 
 
 def _get_drop_down_title(id, col):
+    '''
+    Drop_down menu for movie information
+    :param id: the object id
+    :param col: the column name
+    :return: the dash component for dropdown menu
+    '''
     return dcc.Dropdown(
         id=id,
         options=[
@@ -64,6 +84,11 @@ def _get_drop_down_title(id, col):
 
 
 def _get_drop_down_genres(id):
+    '''
+    Drop_down menu for recommendation system-genre
+    :param id: the object id
+    :return: the dash component for dropdown menu
+    '''
     return dcc.Dropdown(
         id=id,
         options=[
@@ -78,6 +103,12 @@ def _get_drop_down_genres(id):
 
 
 def _get_drop_down_year(id, col):
+    '''
+    Drop_down menu for recommendation system-year
+    :param id: the object id
+    :param col: the column name
+    :return: the dash component for dropdown menu
+    '''
     return dcc.Dropdown(
         id=id,
         options=[
@@ -87,6 +118,10 @@ def _get_drop_down_year(id, col):
 
 
 def geo_graph():
+    '''
+    Illustrate the geographic figure
+    :return: fig
+    '''
     country = pd.DataFrame(df['country_name'].value_counts().reset_index().values,
                            columns=['country', 'total'])
     # country = country[country['total'] > 0]
@@ -107,6 +142,11 @@ def geo_graph():
 
 
 def get_graphs_from_all_data(go_figs):
+    '''
+    The main layout for our homepage
+    :param go_figs: the figures to be shown on the page
+    :return: html.Div component
+    '''
     return html.Div([
         dcc.Tabs([
             dcc.Tab(label='General', children=[
@@ -195,6 +235,13 @@ def get_graphs_from_all_data(go_figs):
 
 
 def _update_graph_pie(selected, func, title):
+    '''
+    Update the pie chart
+    :param selected: the selected year/language
+    :param func: the function to be called in data_vis.py
+    :param title: the selected title
+    :return: fig
+    '''
     data = func(df, selected)
     layout = go.Layout(
         title=title
@@ -208,8 +255,11 @@ def _update_graph_pie(selected, func, title):
     Output('recommend-genre-vote-output', 'data'),
     Input('recommend-genre-vote-input', 'value'))
 def update_genre_recommend(selected_genre):
-    # title = "The link is "
-    # message = _update_link_string(selected_title, data_url_link, title)
+    '''
+    Update the recommended movies results
+    :param selected_genre: the selected genre
+    :return: result data
+    '''
     genre_string = str(selected_genre)
     dff = recommend_k_movies_genre(df, genre_string.lower(), 10)
     sorted_df = sorted(dff.items(), key=lambda x: -x[1])
@@ -221,8 +271,11 @@ def update_genre_recommend(selected_genre):
     Output('recommend-genre-year-output', 'data'),
     Input('recommend-genre-year-input', 'value'))
 def update_genre_recommend(selected_year):
-    # title = "The link is "
-    # message = _update_link_string(selected_title, data_url_link, title)
+    '''
+    Update
+    :param selected_year:
+    :return:
+    '''
     year = 1000
     if isinstance(selected_year, str):
         year = int(selected_year)
