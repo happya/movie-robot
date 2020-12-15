@@ -47,3 +47,12 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 
 
 ...
+
+## Get setup and use the application
+
+1. git clone https://github.com/happya/movie-robot.git
+2. cd into the folder
+3. install conda
+4. conda create -n <env_name> python=3.8 -f envs.yml
+5. run ./start.sh and open `localhost:8088` in your favorite browser
+6. Explore and enjoy `movie-robot`
