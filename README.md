@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/github/happya/movie-robot/builds/207706144.svg?branch=main)](https://travis-ci.com/github/happya/movie-robot/builds/207706144)
 # Movie Robot
 
 ## Introduction
