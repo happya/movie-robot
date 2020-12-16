@@ -26,8 +26,6 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 - Please recommend movies for me base on my appetite (Avatar).
 
 
-...
-
 
 ## Team Member
 
@@ -61,7 +59,6 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 - dash-renderer==1.8.3
 - dash-table==4.11.1
 
-
 ...
 
 ## Directory Structure
@@ -91,7 +88,7 @@ movie-robot
     ├── requirements.txt
     ├── data_cleaning.ipynb
     ├── envs.yml
-    └── starsh.sh
+    └── star.sh
 ```
 
 ## Get setup and use the application
