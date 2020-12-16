@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/happya/movie-robot.svg?branch=master)](https://travis-ci.com/github/happya/movie-robot/builds/207706144)
 
-<img src="https://github.com/happya/movie-robot/blob/master/demo/icon.png" width=5% height=5%>
+<img src="https://github.com/happya/movie-robot/blob/master/demo/icon.png" width=15% height=15%>
 
 # Movie Robot
 
