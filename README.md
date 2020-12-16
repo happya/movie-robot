@@ -1,5 +1,18 @@
 [![Build Status](https://travis-ci.com/happya/movie-robot.svg?branch=master)](https://travis-ci.com/github/happya/movie-robot/builds/207706144)
+
+<img src="https://github.com/happya/movie-robot/blob/master/demo/icon.png" width=5% height=5%>
+
 # Movie Robot
+
+
+## Background
+
+For people who love watching movie may want to ask questions like:
+- How can we have a quick review for a selected movie?
+- How can we get insightful information from thousands of movies?
+- How can we quickly get some recommendation movies?
+
+Our Movie Robot's goal is to provide a useful tool to solve these issues.
 
 ## Introduction
 
@@ -20,7 +33,7 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 
 **Chiao-Tung Yang**
 
-**Weining Liang**
+**Wei-Ning Liang**
 
 **Ya Yi**
 
@@ -39,14 +52,47 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 
 **Python packages**
 
-- pandas
-- numpy
-- matplotlib
-- plotly
-- dash
+- pandas==1.1.5
+- numpy==1.19.4
+- plotly==4.14.1
+- dash==1.18.1
+- dash-core-components==1.14.1
+- dash-html-components==1.1.1
+- dash-renderer==1.8.3
+- dash-table==4.11.1
 
 
 ...
+
+## Directory Structure
+```
+movie-robot
+    ├── LICENSE
+    ├── README.md
+    ├── data
+    │   └── movies_cleaned.csv
+    ├── demo  
+    │   ├── Layout.png   
+    │   └── Movie Robot Demo.mp4
+    ├── docs
+    │   ├── CSE583-Final Presentation.pptx
+    │   ├── component_spec.md
+    │   └── functional_spec.md
+    ├── example
+    │   ├── dash_vis.ipynb
+    │   └── data_cleaning.ipynb
+    ├── src
+    │   ├── __init__.py
+    │   ├── dash_vis.py
+    │   └── data_vis.py
+    ├── test
+    │   ├── __init__.py
+    │   └── test.py
+    ├── requirements.txt
+    ├── data_cleaning.ipynb
+    ├── envs.yml
+    └── starsh.sh
+```
 
 ## Get setup and use the application
 
@@ -56,3 +102,7 @@ Our project aims to provide inforamtion and insigts for movies based on differen
 4. conda create -n <env_name> python=3.8 -f envs.yml
 5. run ./start.sh and open `localhost:8088` in your favorite browser
 6. Explore and enjoy `movie-robot`
+
+## Movie Robot Homepage Preview
+<img src="https://github.com/happya/movie-robot/blob/master/demo/Layout.png" width=85% height=85%>
+
