@@ -95,9 +95,18 @@ movie-robot
 
 1. git clone https://github.com/happya/movie-robot.git
 2. cd into the folder
-3. install conda
-4. conda create -n <env_name> python=3.8 -f envs.yml
-5. run ./start.sh and open `localhost:8088` in your favorite browser
+3. You can either use `conda` or `pip` to setup your python environment:
+    a. If you are using `conda`:
+    ```bash
+    # install conda
+    # create environments based on the envs.yaml
+    conda create -n <env_name> python=3.8 -f envs.yml
+   ```
+   b. If you are using `pip`:
+   ```bash
+   pip install requirments.txt -r
+   ```
+5. run ./start.sh and open `localhost:8088` in your favorite browser (Normally it will pop out automatically in your default browser)
 6. Explore and enjoy `movie-robot`
 
 ## Movie Robot Homepage Preview
