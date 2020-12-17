@@ -109,6 +109,10 @@ movie-robot
 5. run ./start.sh and open `localhost:8088` in your favorite browser (Normally it will pop out automatically in your default browser)
 6. Explore and enjoy `movie-robot`
 
+## Demo
+<video width="320" height="240" controls>
+  <source src="./demo/Movie Robot Demo.mp4" type="video/mp4">
+</video>
 ## Movie Robot Homepage Preview
 <img src="https://github.com/happya/movie-robot/blob/master/demo/Layout.png" width=85% height=85%>
 
