@@ -111,9 +111,7 @@ movie-robot
 
 ## Demo
 
-<video width="320" height="240" controls>
-  <source src="./demo/Movie Robot Demo.mp4" type="video/mp4">
-</video>
+[![Watch the video](https://github.com/happya/movie-robot/blob/master/demo/Layout.png)](https://github.com/happya/movie-robot/blob/master/demo/Movie Robot Demo.mp4)
 
 ## Movie Robot Homepage Preview
 <img src="https://github.com/happya/movie-robot/blob/master/demo/Layout.png" width=85% height=85%>
